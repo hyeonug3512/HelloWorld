@@ -16,5 +16,11 @@ public class Account {
 	public String getOwner() { return owner; }
 	public void serOwner(String owner) { this.owner = owner; }
 	public int getBalance() { return balance; }
-	public void serBalance(int balance) {this.balance = balance;}
+	public void setBalance(int balance) {this.balance = balance;}
+
+	@Override
+	public String toString() {
+		return "계좌번호 [계좌번호=" + ano + ", 소유자=" + owner + ", 잔액=" + balance + "]";
+	}
 }
+
