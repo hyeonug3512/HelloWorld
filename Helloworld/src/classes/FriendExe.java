@@ -3,97 +3,112 @@ package classes;
 import java.util.Scanner;
 
 public class FriendExe {
-	private static Account[] accountArray = new Account[100];
-	private static Scanner sc = new Scanner(System.in);
+	static Scanner sc = new Scanner(System.in);
+	static Friend[] fAry = new Friend[10];
 
 	public static void main(String[] args) {
 		boolean run = true;
-		while (run) {
+
+		while (true) {
 			System.out.println("========================");
-			System.out.println("1.입력 | 2.조회 | 3.리스트 | 4.종료 ");
+			System.out.println("1.생성 2.조회 3.리스트. 4.종료");
 			System.out.println("========================");
-			System.out.println("선택> ");
-			int selectNo = sc.nextInt();
-			sc.nextLine();
+			System.out.print("선택>");
+			int menu = sc.nextInt();
+			if (menu == 1)
+				createFriend();
 
-			if (selectNo == 1) {
-				// 입력
-				createAccount();
+			if (menu == 2)
+				searchFriend();
 
-			} else if (selectNo == 2) {
-				// 조회
-				accountList();
+			if (menu == 3)
+				listFriend();
 
-			} else if (selectNo == 3) {
-				// 리스트
-				deposit();
+			if (menu == 4) {
+				System.out.println("프로그램을 종료합니다.");
 
-			} else if (selectNo == 4) {
-				// 종료
-				run = false;
-
-			
-			}
-		}
-		System.out.println("프로그램 종료.");
-	}
-
-	static void createAccount() {
-		System.out.println("대학교 동창:");
-		String ano = sc.nextLine();
-		System.out.println("회사동료:");
-		String owner = sc.nextLine();
-		System.out.println("그 외:");
-		int balance = sc.nextInt();
-		Account acnt = new Account(ano, owner, balance);
-		for (int i = 0; i < accountArray.length; i++) {
-			if (accountArray[i] == null) {
-				accountArray[i] = acnt;
 				break;
 			}
 		}
 	}
 
-	static void accountList() {
-		for (Account acnt : accountArray) {
-			if (acnt != null) {
-				System.out.println(acnt);
-			}
-		}
+	static void createFriend() {
 
-	}
+		System.out.println("1.그 외 2.대학동창 3.회사동료");
+		System.out.println("선택>");
+		int menu1 = sc.nextInt();
+		if (menu1 == 1) {
+			System.out.println("이름을 입력하세요:");
+			String name = sc.next();
+			sc.nextLine();
+			System.out.println("번호를 입력하세요:");
+			String phone = sc.next();
+			Friend ff = new Friend(name, phone);
 
-	static void deposit() {
-		System.out.println("조회 할 계좌 입력:");
-		String ano = sc.nextLine();
-		System.out.println("입금 할 금액 입력:");
-		int amount = sc.nextInt();
-		Account accnt = findAccount(ano);
-		int balance = accnt.getBalance();// 현잔고
-		accnt.setBalance(balance + amount);
-	}
-
-	static void withdraw() {
-		System.out.println("조회 할 계좌 입력:");
-		String ano = sc.nextLine();
-		System.out.println("출금 할 금액 입력:");
-		int amount = sc.nextInt();
-		Account accnt = findAccount(ano);
-		int balance = accnt.getBalance();// 현잔고
-		accnt.setBalance(balance - amount);
-	}
-
-	static Account findAccount(String ano) {
-		Account accnt = null;
-		for (Account acnt : accountArray) {
-			if (acnt != null) {// null 여부를 체크.
-				if (ano.contentEquals(acnt.getAno())) {
-					accnt = acnt;
+			for (int i = 0; i < fAry.length; i++) {
+				if (fAry[i] == null) {
+					fAry[i] = ff;
 					break;
 				}
 			}
 		}
-		return accnt;
 
+		if (menu1 == 2) {
+			System.out.print("이름: ");
+			String name = sc.next();
+			sc.nextLine();
+			System.out.print("연락처: ");
+			String phone = sc.next();
+			System.out.print("학교이름: ");
+			String univ = sc.next();
+			System.out.print("전공: ");
+			String major = sc.next();
+			UnivFriend uf = new UnivFriend(name, phone, univ, major);
+			for (int i = 0; i < fAry.length; i++) {
+				if (fAry[i] == null) {
+					fAry[i] = uf;
+					break;
+
+				}
+			}
+		}
+		if (menu1 == 3) {
+			System.out.print("이름: ");
+			String name = sc.next();
+			System.out.print("번호: ");
+			String phone = sc.next();
+			System.out.print("회사: ");
+			String company = sc.next();
+			System.out.print("부서: ");
+			String dept = sc.next();
+			ComFriend cf = new ComFriend(name, phone, company, dept);
+			for (int i = 0; i < fAry.length; i++) {
+				if (fAry[i] == null) {
+					fAry[i] = cf;
+					break;
+				}
+			}
+		}
+	}
+
+	static void searchFriend() {
+		System.out.println("이름 입력: ");
+		String search = sc.next();
+		for (int i = 0; i < fAry.length; i++) {
+			if (fAry[i] != null) {
+				if ((fAry[i].getName()).equals(search)) {
+					fAry[i].introduce();
+					break;
+				}
+			}
+		}
+	}
+
+	static void listFriend() {
+		for (Friend fff : fAry) {
+			if (fff != null)
+				fff.introduce();
+
+		}
 	}
 }
